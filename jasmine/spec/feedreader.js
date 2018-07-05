@@ -24,34 +24,33 @@ $(function() {
             expect($("body").hasClass("menu-hidden")).toBe(true);
           })
           it('should change visibility when menu icon is clicked',function () {
-            $('body').removeClass('menu-hidden');
+            $('.menu-icon-link').click();
             expect($("body").hasClass("menu-hidden")).toBe(false);
-            $('body').addClass('menu-hidden');
+            $('.menu-icon-link').click();
             expect($("body").hasClass("menu-hidden")).toBe(true);
           })
     })
 
     describe('Initial Entries',function () {
         beforeEach(function(done){
-          loadFeed(0,function () {
-          });
-          done() 
+          loadFeed(0,done);
         });
         it('should complete its work and there is at least a single entry within the .feed container.',function (done) {
-          expect($(".feed")[0].length !== 0).toBe(true);
+          expect($(".feed").children().length).toBeGreaterThan(0);
           done()
         })
     })
 
     describe('New Feed Selection',function () {
-        let entries = $(".feed")[0].outerHTML;
+        let entries; 
         beforeEach(function(done){
           loadFeed(0,function () {
-          done() 
+            entries = $(".feed").html();
+            loadFeed(1,done);
           });
         });
          it('should actually change the content',function (done) {
-          expect($(".feed")[0].outerHTML).not.toEqual(entries);
+          expect($(".feed").html()).not.toEqual(entries);
           done()
          })
     })
